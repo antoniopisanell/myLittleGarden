@@ -17,4 +17,10 @@ run_server_local:
 	python3 server.py 127.0.0.1 $(PORT) &
 
 run_mock_esp32: run_server_local
-	python3 mock_esp32.py $(PORT
+	python3 mock_esp32.py $(PORT)
+
+list_docker:
+	sudo docker ps -a
+
+start_docker: # only after installed using the create_database entry
+	sudo docker start my_little_garden
