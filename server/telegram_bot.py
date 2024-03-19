@@ -18,21 +18,18 @@ bot = telebot.TeleBot(BOT_TOKEN)
 @bot.message_handler(commands=['start', 'hello'])
 def send_welcome(message):
     sent_msg = bot.send_message(message.chat.id, "Salut ! Je suis le jumeau numérique de ton Jardin !")
-    bot.register_next_step_handler(sent_msg, get_daily_horoscope)
+    bot.register_next_step_handler(sent_msg, sendChatGPT)
     
 
-
+# recup all message and send to chatGPT
 @bot.message_handler(func=lambda msg: True)
 def echo_all(message):
-    get_daily_horoscope(message)
+    sendChatGPT(message)
 
 
 
-def get_daily_horoscope(message):
-    
+def sendChatGPT(message):
     bot.send_message(message.chat.id,openAiRequest.functionResponseChatGPT(message.text,data))
-
-
 
 
 
