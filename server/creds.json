@@ -1,0 +1,4 @@
+{
+  "telegramBot-token": "YOUR_TELEGRAM_BOT_TOKEN",
+  "openai-token": "YOUR_OPENAI_API_KEY"
+}
