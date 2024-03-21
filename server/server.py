@@ -1,17 +1,13 @@
 import socket
 from functools import reduce
-
 from repository import myLittleGardenRepository
-
-repo = myLittleGardenRepository()
-
-# get arguments from command line
-#
 import sys
+
 if len(sys.argv) == 1 or len(sys.argv) > 3:
   print("Usage: python server.py <ip> <port>")
   sys.exit(1)
 
+repo = myLittleGardenRepository()
 UDP_IP = sys.argv[1]
 UDP_PORT = int(sys.argv[2])
 
