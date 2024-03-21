@@ -24,10 +24,6 @@ sock.bind((UDP_IP, UDP_PORT))
 
 while True:
   data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
-  document = {}
-  umidity, temp, light = tuple(reduce(lambda acc, x: acc + [float(x.split(":")[1].strip())], data.decode("utf-8").split(","), []))
-  document["umidity"] = umidity
-  document["temp"] = temp
-  document["light"] = light
+  document = reduce(lambda acc, x: {**acc, x.split(":")[0]: float(x.split(":")[1].strip())}, data.decode("utf-8").split(","), {})
   print(document)
   repo.insert(document)

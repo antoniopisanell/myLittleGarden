@@ -3,6 +3,10 @@ from repository import myLittleGardenRepository
 import telebot
 import openAiRequest
 import os 
+import json
+
+CURR_DIR = os.path.dirname(os.path.realpath(__file__))
+
 repo = myLittleGardenRepository()
 
 # to ge the last inserted document
@@ -10,7 +14,8 @@ repo = myLittleGardenRepository()
 data = repo.getLastInserted()
 
 # token for the telegram bot
-BOT_TOKEN = "6595840467:AAGvq5x109q3yhsnyIQQbxDD27ToAlbLMng"
+creds = json.load(open(f'{CURR_DIR}/creds.json'))
+BOT_TOKEN = creds['telegramBot-token']
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -29,7 +34,7 @@ def echo_all(message):
 
 
 def sendChatGPT(message):
-    bot.send_message(message.chat.id,openAiRequest.functionResponseChatGPT(message.text,data))
+    bot.send_message(message.chat.id,openAiRequest.functionResponseChatGPT(message.text, repo.getLastInserted()))
 
 
 
