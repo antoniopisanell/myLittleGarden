@@ -7,9 +7,9 @@
 
 #include "config.h"
 
-#include <Adafruit_Sensor.h>
-#include <DHT.h>
-#include <DHT_U.h>
+// #include <Adafruit_Sensor.h>
+// #include <DHT.h>
+// #include <DHT_U.h>
 
 #define DHTPIN 4     // Digital pin connected to the DHT sensor 
 // Feather HUZZAH ESP8266 note: use pins 3, 4, 5, 12, 13 or 14 --
@@ -23,7 +23,7 @@
 // See guide for details on sensor wiring and usage:
 //   https://learn.adafruit.com/dht/overview
 
-DHT_Unified dht(DHTPIN, DHTTYPE);
+// DHT_Unified dht(DHTPIN, DHTTYPE);
 
 uint32_t delayMS;
 
@@ -39,6 +39,8 @@ unsigned int remotePort = 10000;  // remote port to transmiit too
 WiFiUDP udp;
 
 IPAddress remoteIP(172,20,10,3);;  // IP will be entered as text
+char ssid[] = "Antonio’s iPhone";
+char pass[] = "1234567890";
 
 // function prototypes
 IPAddress getIPaddress(const char* prompt);
@@ -73,38 +75,38 @@ void setup() {
   displayIPaddress(remoteIP, remotePort);
 
   // Initialize device.
-  dht.begin();
+  // dht.begin();
   Serial.println(F("DHTxx Unified Sensor Example"));
   // Print temperature sensor details.
-  sensor_t sensor;
-  dht.temperature().getSensor(&sensor);
-  Serial.println(F("------------------------------------"));
-  Serial.println(F("Temperature Sensor"));
-  Serial.print  (F("Sensor Type: ")); Serial.println(sensor.name);
-  Serial.print  (F("Driver Ver:  ")); Serial.println(sensor.version);
-  Serial.print  (F("Unique ID:   ")); Serial.println(sensor.sensor_id);
-  Serial.print  (F("Max Value:   ")); Serial.print(sensor.max_value); Serial.println(F("°C"));
-  Serial.print  (F("Min Value:   ")); Serial.print(sensor.min_value); Serial.println(F("°C"));
-  Serial.print  (F("Resolution:  ")); Serial.print(sensor.resolution); Serial.println(F("°C"));
-  Serial.println(F("------------------------------------"));
-  // Print humidity sensor details.
-  dht.humidity().getSensor(&sensor);
-  Serial.println(F("Humidity Sensor"));
-  Serial.print  (F("Sensor Type: ")); Serial.println(sensor.name);
-  Serial.print  (F("Driver Ver:  ")); Serial.println(sensor.version);
-  Serial.print  (F("Unique ID:   ")); Serial.println(sensor.sensor_id);
-  Serial.print  (F("Max Value:   ")); Serial.print(sensor.max_value); Serial.println(F("%"));
-  Serial.print  (F("Min Value:   ")); Serial.print(sensor.min_value); Serial.println(F("%"));
-  Serial.print  (F("Resolution:  ")); Serial.print(sensor.resolution); Serial.println(F("%"));
-  Serial.println(F("------------------------------------"));
-  // Set delay between sensor readings based on sensor details.
-  delayMS = sensor.min_delay / 1000;
+  // sensor_t sensor;
+  // dht.temperature().getSensor(&sensor);
+  // Serial.println(F("------------------------------------"));
+  // Serial.println(F("Temperature Sensor"));
+  // Serial.print  (F("Sensor Type: ")); Serial.println(sensor.name);
+  // Serial.print  (F("Driver Ver:  ")); Serial.println(sensor.version);
+  // Serial.print  (F("Unique ID:   ")); Serial.println(sensor.sensor_id);
+  // Serial.print  (F("Max Value:   ")); Serial.print(sensor.max_value); Serial.println(F("°C"));
+  // Serial.print  (F("Min Value:   ")); Serial.print(sensor.min_value); Serial.println(F("°C"));
+  // Serial.print  (F("Resolution:  ")); Serial.print(sensor.resolution); Serial.println(F("°C"));
+  // Serial.println(F("------------------------------------"));
+  // // Print humidity sensor details.
+  // dht.humidity().getSensor(&sensor);
+  // Serial.println(F("Humidity Sensor"));
+  // Serial.print  (F("Sensor Type: ")); Serial.println(sensor.name);
+  // Serial.print  (F("Driver Ver:  ")); Serial.println(sensor.version);
+  // Serial.print  (F("Unique ID:   ")); Serial.println(sensor.sensor_id);
+  // Serial.print  (F("Max Value:   ")); Serial.print(sensor.max_value); Serial.println(F("%"));
+  // Serial.print  (F("Min Value:   ")); Serial.print(sensor.min_value); Serial.println(F("%"));
+  // Serial.print  (F("Resolution:  ")); Serial.print(sensor.resolution); Serial.println(F("%"));
+  // Serial.println(F("------------------------------------"));
+  // // Set delay between sensor readings based on sensor details.
+  // delayMS = sensor.min_delay / 1000;
 }
 
 void loop() {
   udp.begin(localPort);
   char text[100] = { 0 };
-  sprintf(text, "Umidity: %d, Temperature: %d, Light: %d", getMockUmidityPercentage(), getMockTemperature(), getMockLight());
+  sprintf(text, "Humidity: %d,Temperature: %d,Light: %d", getMockUmidityPercentage(), getMockTemperature(), getMockLight());
   Serial.print("Transmitting to ");
   displayIPaddress(remoteIP, remotePort);
   Serial.println(text);
@@ -113,29 +115,29 @@ void loop() {
   udp.endPacket();
   delay(1000);
 
-  // Delay between measurements.
-  delay(delayMS);
-  // Get temperature event and print its value.
-  sensors_event_t event;
-  dht.temperature().getEvent(&event);
-  if (isnan(event.temperature)) {
-    Serial.println(F("Error reading temperature!"));
-  }
-  else {
-    Serial.print(F("Temperature: "));
-    Serial.print(event.temperature);
-    Serial.println(F("°C"));
-  }
-  // Get humidity event and print its value.
-  dht.humidity().getEvent(&event);
-  if (isnan(event.relative_humidity)) {
-    Serial.println(F("Error reading humidity!"));
-  }
-  else {
-    Serial.print(F("Humidity: "));
-    Serial.print(event.relative_humidity);
-    Serial.println(F("%"));
-  }
+  // // Delay between measurements.
+  // delay(delayMS);
+  // // Get temperature event and print its value.
+  // sensors_event_t event;
+  // dht.temperature().getEvent(&event);
+  // if (isnan(event.temperature)) {
+  //   Serial.println(F("Error reading temperature!"));
+  // }
+  // else {
+  //   Serial.print(F("Temperature: "));
+  //   Serial.print(event.temperature);
+  //   Serial.println(F("°C"));
+  // }
+  // // Get humidity event and print its value.
+  // dht.humidity().getEvent(&event);
+  // if (isnan(event.relative_humidity)) {
+  //   Serial.println(F("Error reading humidity!"));
+  // }
+  // else {
+  //   Serial.print(F("Humidity: "));
+  //   Serial.print(event.relative_humidity);
+  //   Serial.println(F("%"));
+  // }
 }
 
 // read IP address from keyboard and check it
