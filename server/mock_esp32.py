@@ -5,7 +5,6 @@ import sys
 from pynput import keyboard
 
 def on_key_press(key):
-  print("Key pressed: ", key)
   # so this is a bit of a quirk with pynput,
   # if an alpha-numeric key is pressed the key object will have an attribute
   # char which contains a string with the character, but it will only have
@@ -18,20 +17,24 @@ def on_key_press(key):
     global min_humidity, max_humidity
     global min_temp, max_temp
     global min_light, max_light
-    if key.char == "z":
-      min_humidity, max_humidity = 60, 80
-    elif key.char == "u":
-      min_humidity, max_humidity = 0, 20
-    if key.char == "h":
-      min_light, max_light = 60, 80
-    elif key.char == "j":
-      min_light, max_light = 0, 20
+
+    match key.char:
+      case "z":
+        print("La plante a été arosée")
+        min_humidity, max_humidity = 60, 80
+      case "u":
+        print("La plante a séché")
+        min_humidity, max_humidity = 0, 20
+      case "h":
+        print("La plante a été déplacée à la lumière")
+        min_light, max_light = 60, 80
+      case "j":
+        print("La plante a été déplacée à l'ombre")
+        min_light, max_light = 0, 20
 
 
 # same as the key press callback, but for releasing keys
 def on_key_release(key):
-  print("Key released: ", key)
-  # if you need to check for a special key like shift you can
   # do so like this:
   if key == keyboard.Key.shift:
     print("SHIFT KEY RELEASED!")

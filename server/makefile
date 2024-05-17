@@ -1,7 +1,7 @@
 PORT=10000
 
 create_database:
-	docker run -d -p 27017:27017 --name my_little_garden mongo
+	docker start my_little_garden 2> /dev/null || docker run -d -p 27017:27017 --name my_little_garden mongo
 
 install_requirements:
 	pip3 install -r requirements.txt
